@@ -36,3 +36,193 @@
     transform: rotate(360deg);
   }
 }
+/* ------------------------------------------------------------------ */
+/* Reset CSS */
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/* Variabale */
+
+:root {
+  --main-color: #c15c19;
+  --scrollcolor: #fff;
+  --scrollbackground: #141e27;
+  /* #c15c19 */
+}
+body {
+  background-image: url(./ring.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 800px;
+}
+/* Navigation bar */
+.navbar {
+  position: relative;
+  background-color: rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  .navbar-logo {
+    width: 10%;
+  }
+  .nav__list {
+    display: flex;
+    margin-left: 42px;
+    justify-content: center;
+    font-weight: 500;
+  }
+  .nav__list--unit {
+    padding: 14px;
+    font-size: 22px;
+    color: #fff;
+    align-items: center;
+    list-style: none;
+    margin-left: 20px;
+    &.nav__list--unit:first-child {
+      color: var(--main-color);
+    }
+  }
+  .nav__list--unit:hover {
+    color: var(--main-color);
+  }
+  .trending-icon {
+    color: var(--main-color);
+    margin-left: 5px;
+  }
+  .navbar__sign {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    cursor: pointer;
+    font-weight: 500;
+  }
+  .navbar__sign--search--icon {
+    color: var(--main-color);
+    margin-right: 16px;
+    font-size: 20px;
+  }
+  .navbar__user--up {
+    background-color: var(--main-color);
+    padding: 12px;
+    margin-left: 16px;
+    border-radius: 4px;
+  }
+  .navbar__user--up:hover {
+    opacity: 90%;
+  }
+}
+
+/* Content */
+
+.content {
+  /* background-color: #282c34; */
+
+  /* Content-trailer */
+  .content__list--poster {
+    height: 810px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .content__list--poster--trailer {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: -15%;
+    width: 190px;
+    height: 190px;
+    border: 1px solid #fff;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  .content__list--poster--trailer:hover {
+    background-image: url(./rins.jpg);
+    opacity: 0.8;
+  }
+  .content__list--poster--trailer-icon {
+    color: #fff;
+    font-size: 65px;
+  }
+  .content__list--poster-text {
+    color: #fff;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    top: 74%;
+    text-align: center;
+    /* background-color: rgba(71, 108, 151, 0.05); */
+    width: 100%;
+    /* height: 300px; */
+  }
+  .content__list--poster-name {
+    font-size: 80px;
+    font-weight: 700;
+    line-height: 60px;
+  }
+  .content__list--poster-title {
+    font-size: 32.5px;
+    margin-bottom: 10px;
+  }
+  /* Content-navbar */
+
+  .content__navbar--list {
+    display: flex;
+    list-style: none;
+    justify-content: space-around;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+  .content__navbar--list--item {
+    font-weight: 700;
+  }
+
+  /* Content-list */
+  .content__list {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-shrink: 0;
+    overflow-x: auto;
+    width: 100%;
+
+  }
+  .content__list--icon {
+    display: flex;
+  }
+  .content__list--image {
+    width: auto;
+    height: 720px;
+    object-fit: cover;
+
+  }
+
+  .content__list__title {
+    position: absolute;
+  }
+
+  .content__list__title--name {
+  }
+
+  .content__list__title--nation {
+  }
+
+  .content__list__title--year {
+  }
+}
+
+/* Footer */
+
+.footer {
+  .footer-infor {
+    text-align: center;
+    background-color: var(--main-color);
+  }
+}
