@@ -54,18 +54,20 @@ export default class Content extends Component {
             <li class="content__navbar--list--item">MORE</li>
           </ul>
         </div>
-        <div class="content__list">
-          {List.map((list) => (
-            <div class="content__list--icon">
-              <img class="content__list--image" src={list.Image} alt="" />
-              <div class="content__list__title">
-                <div class="content__list__title--name">{list.Title}</div>
-                <div class="content__list__title--nation">{list.Nation}</div>
-                <div class="content__list__title--year">{list.Year}</div>
+        <div class="content__container">
+          <div class="content__list">
+            {List.map((list) => (
+              <div class="content__list--icon" style={{backgroundImage: `url('${list.Image}')`}}>
+                <div class="content__list__title">
+                  <div class="content__list__title--name">{list.Title}</div>
+                  <div class="content__list__title--nation">{list.Nation}</div>
+                  <div class="content__list__title--year">{list.Year}</div>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
+        
       </div>
     );
   }
