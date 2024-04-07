@@ -18,7 +18,7 @@ export default function FooterInfor() {
           </li>
           <li className="">+84 934102678</li>
           <li className="">baotien123321@gmail.com</li>
-          <li className="">Thank for watching :3</li>
+          <li className="">Thank for watching</li>
         </ul>
 
         <div className="w-[33%] flex flex-col items-center cursor-pointer">
