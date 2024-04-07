@@ -1,27 +1,47 @@
 import { useState, useEffect } from "react";
 import React from "react";
-import { toggleButton } from "../../JS/Action";
+import "./Darkmode.css";
 export default function DarkModeButton() {
-
   const [theme, setTheme] = useState("light");
+  const getTheme = localStorage.getItem("theme");
+
+  const toggle = () => {
+    const BUTTON = document.querySelector(".toggle");
+    const IS_PRESSED = BUTTON.matches("[aria-pressed=true]");
+    document.body.setAttribute("data-dark-mode", IS_PRESSED ? false : true);
+    BUTTON.setAttribute("aria-pressed", IS_PRESSED ? false : true);
+  }
 
   useEffect(() => {
-    if (theme === "dark") {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme) {
+      const isDarkMode = savedTheme === "dark";
+      const BUTTON = document.querySelector(".toggle");
+      BUTTON.setAttribute("aria-pressed", isDarkMode);
+      setTheme(savedTheme);
+    }
+  }, []);
+  
+  useEffect(() => {
+    if (getTheme === "dark") {
       document.documentElement.classList.add("dark");
     } else {
       document.documentElement.classList.remove("dark");
     }
   }, [theme]);
-
+  
   const switchDarkMode = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
+    const newTheme = theme === "dark" ? "light" : "dark"; 
+    setTheme(newTheme); 
+    localStorage.setItem("theme", newTheme); 
+    toggle()
   };
+  
 
   return (
     <div className="dark__mode--btn">
       <button
         onClick={() => {
-          toggleButton();
           switchDarkMode();
         }}
         className="toggle"

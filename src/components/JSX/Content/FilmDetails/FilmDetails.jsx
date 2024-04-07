@@ -2,15 +2,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlayCircle, faXmarkCircle } from "@fortawesome/free-solid-svg-icons";
-import {
-  showTrailer,
-  hideTrailer,
-  redHeart,
-  yellowMark,
-  blackNofi,
-} from "../../../JS/Action";
 import { ERROR_BACKGROUND, ERROR_VIDEO, IMG_URL } from "../../../JS/API";
-import { ratingFilm } from "../../../JS/Action";
 import Loading from "./Loading";
 
 export default function FilmDetails() {
@@ -19,10 +11,13 @@ export default function FilmDetails() {
   // State
   const [movie, setMovie] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [showTrailer, setShowTrailer] = useState(false);
   const [trailerKey, setTrailerKey] = useState("");
   const [rating, setRating] = useState("");
   const [genre, setGenre] = useState([]);
   const [year, setYear] = useState("");
+  const [redHeart, setRedHeart] = useState("white");
+  const [yellowMark, setYellowMark] = useState("white");
   // Video Loading
   const getMovieList = {
     method: "GET",
@@ -32,7 +27,7 @@ export default function FilmDetails() {
         "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5NzM4MzM4NjU4OWM5MmJlNWVhMDNiZDA0ZmI4MGRiOCIsInN1YiI6IjY1MjM3NDU2NzQ1MDdkMDBhYzRhOTU3ZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.B9vrCoEGitOlsPTq6sfgWxJjEQsfkGN04YR8uO4FLBY",
     },
   };
-  
+
   useEffect(() => {
     setLoading(true);
     fetch(
@@ -41,7 +36,6 @@ export default function FilmDetails() {
     )
       .then((response) => response.json())
       .then((response) => {
-        console.log("response", response);
         setMovie(response);
         setRating(response.vote_average.toFixed(1));
         setGenre(response.genres.map((gen) => gen.name));
@@ -93,12 +87,11 @@ export default function FilmDetails() {
             className="relative bg-no-repeat bg-cover bg-center h-847 text-detail 
                         after:content-[''] after:absolute after:top-0 after:bottom-0 after:right-0
                          after:left-0 after:bg-opacity"
-            onClick={hideTrailer}
+            onClick={() => setShowTrailer(false)}
           ></div>
           {/* Card */}
           <article
-            onLoad={ratingFilm}
-            className=" group text-white absolute rounded-[0.6em] right-0 top-[20%] 
+            className="group text-white absolute rounded-[0.6em] right-0 top-[20%] 
                           left-[20%] overflow-hidden text-xl h-[25em] w-[105vh] aspect-w-16 
                             aspect-h-9 shadow-3xl transition-transform duration-700 hover:scale-[1.06]"
           >
@@ -117,7 +110,7 @@ export default function FilmDetails() {
                 className="group-hover:opacity-60 absolute top-[30%] left-[45%] h-[5em] z-10
                             opacity-0 transition-opacity duration-500 cursor-pointer delay-300"
                 id="PlayTrailerButton"
-                onClick={showTrailer}
+                onClick={() => setShowTrailer(true)}
                 icon={faPlayCircle}
               />
             </div>
@@ -125,11 +118,16 @@ export default function FilmDetails() {
 
             <div className="absolute bottom-[0.5em] left-[3em] right-[0em] text-left transition-transform duration-700 leading-[0.8] z-10 will-change-transform">
               {/* Title & Genres */}
-              <div id="Content" className="w-[40em] transition-all duration-[350ms] delay-100 translate-y-[2em] 
-                                             group-hover:duration-1000 group-hover:delay-200 group-hover:mb-8">
-
+              <div
+                className={`w-[40em] transition-all duration-[350ms] delay-100 translate-y-[2em] 
+                                             group-hover:duration-1000 group-hover:delay-200 group-hover:mb-8 ${
+                                               showTrailer
+                                                 ? "opacity-0"
+                                                 : "opacity-100"
+                                             }`}
+              >
                 <h1 className="text-[1.8em] font-bold text-inherit m-0 opacity-1 drop-shadow-2xl">
-                  {movie.title}
+                  {movie.title || movie.name}
                 </h1>
 
                 <div className="text-[0.8em] font-bold text-tx gap-[0.35em] flex items-end mb-[-0.5em] mt-1 drop-shadow-2xl">
@@ -169,16 +167,18 @@ export default function FilmDetails() {
                   </span>
                   {/* Genre */}
                   <div className="leading-1 text-[1.5em] drop-shadow-2xl mb-[0.1em] flex text-center">
-                    {genre.map((gen,index) => (
-                      <div key={index} className="ml-3 bg-slate-600 rounded-lg p-[0.3em] truncate">
+                    {genre.map((gen, index) => (
+                      <div
+                        key={index}
+                        className="ml-3 bg-slate-600 rounded-lg p-[0.3em] truncate"
+                      >
                         <div className="text-[0.5em] ">{gen}</div>
                       </div>
                     ))}
                   </div>
                 </div>
-
               </div>
-                  {/* Overview */}
+              {/* Overview */}
               <p
                 className="group-hover:opacity-100 group-hover:mb-6 group-hover:delay-[350ms] group-hover:duration-700 duration-[350ms]
                             text-[0.8em] leading-[1.35] delay-[90ms] transition-all overflow-hidden max-h-[5.35em] max-w-[47em] text-ellipsis 
@@ -199,9 +199,13 @@ export default function FilmDetails() {
                 >
                   <path
                     id="Heart"
-                    onClick={redHeart}
+                    onClick={() =>
+                      redHeart === "white"
+                        ? setRedHeart("red")
+                        : setRedHeart("white")
+                    }
                     d="M12.7439 22.3037L11.2939 20.9837C6.1439 16.3137 2.7439 13.2237 2.7439 9.45374C2.7439 6.36374 5.1639 3.95374 8.2439 3.95374C9.9839 3.95374 11.6539 4.76374 12.7439 6.03374C13.8339 4.76374 15.5039 3.95374 17.2439 3.95374C20.3239 3.95374 22.7439 6.36374 22.7439 9.45374C22.7439 13.2237 19.3439 16.3137 14.1939 20.9837L12.7439 22.3037Z"
-                    fill="white"
+                    fill={redHeart}
                   ></path>
                 </svg>
 
@@ -216,9 +220,13 @@ export default function FilmDetails() {
                 >
                   <path
                     id="Mark"
-                    onClick={yellowMark}
+                    onClick={() =>
+                      yellowMark === "white"
+                        ? setYellowMark("yellow")
+                        : setYellowMark("white")
+                    }
                     d="M7.1439 21.3537C6.81056 21.4871 6.4939 21.4581 6.1939 21.2667C5.8939 21.0754 5.7439 20.7961 5.7439 20.4287V5.95374C5.7439 5.40374 5.9399 4.93274 6.3319 4.54074C6.7239 4.14874 7.19456 3.95307 7.7439 3.95374H17.7439C18.2939 3.95374 18.7649 4.14974 19.1569 4.54174C19.5489 4.93374 19.7446 5.4044 19.7439 5.95374V20.4287C19.7439 20.7954 19.5939 21.0747 19.2939 21.2667C18.9939 21.4587 18.6772 21.4877 18.3439 21.3537L12.7439 18.9537L7.1439 21.3537Z"
-                    fill="white"
+                    fill={yellowMark}
                   ></path>
                 </svg>
 
@@ -233,9 +241,8 @@ export default function FilmDetails() {
                 >
                   <path
                     id="Nofi"
-                    onClick={blackNofi}
-                    d="M9.7439 19.9537V17.9537H21.7439V19.9537H9.7439ZM9.7439 13.9537V11.9537H21.7439V13.9537H9.7439ZM9.7439 7.95374V5.95374H21.7439V7.95374H9.7439ZM5.7439 20.9537C5.1939 20.9537 4.7229 20.7577 4.3309 20.3657C3.9389 19.9737 3.74323 19.5031 3.7439 18.9537C3.7439 18.4037 3.9399 17.9327 4.3319 17.5407C4.7239 17.1487 5.19456 16.9531 5.7439 16.9537C6.2939 16.9537 6.7649 17.1497 7.1569 17.5417C7.5489 17.9337 7.74457 18.4044 7.7439 18.9537C7.7439 19.5037 7.5479 19.9747 7.1559 20.3667C6.7639 20.7587 6.29323 20.9544 5.7439 20.9537ZM5.7439 14.9537C5.1939 14.9537 4.7229 14.7577 4.3309 14.3657C3.9389 13.9737 3.74323 13.5031 3.7439 12.9537C3.7439 12.4037 3.9399 11.9327 4.3319 11.5407C4.7239 11.1487 5.19456 10.9531 5.7439 10.9537C6.2939 10.9537 6.7649 11.1497 7.1569 11.5417C7.5489 11.9337 7.74457 12.4044 7.7439 12.9537C7.7439 13.5037 7.5479 13.9747 7.1559 14.3667C6.7639 14.7587 6.29323 14.9544 5.7439 14.9537ZM5.7439 8.95374C5.1939 8.95374 4.7229 8.75774 4.3309 8.36574C3.9389 7.97374 3.74323 7.50307 3.7439 6.95374C3.7439 6.40374 3.9399 5.93274 4.3319 5.54074C4.7239 5.14874 5.19456 4.95307 5.7439 4.95374C6.2939 4.95374 6.7649 5.14974 7.1569 5.54174C7.5489 5.93374 7.74457 6.4044 7.7439 6.95374C7.7439 7.50374 7.5479 7.97474 7.1559 8.36674C6.7639 8.75874 6.29323 8.9544 5.7439 8.95374Z"
                     fill="white"
+                    d="M9.7439 19.9537V17.9537H21.7439V19.9537H9.7439ZM9.7439 13.9537V11.9537H21.7439V13.9537H9.7439ZM9.7439 7.95374V5.95374H21.7439V7.95374H9.7439ZM5.7439 20.9537C5.1939 20.9537 4.7229 20.7577 4.3309 20.3657C3.9389 19.9737 3.74323 19.5031 3.7439 18.9537C3.7439 18.4037 3.9399 17.9327 4.3319 17.5407C4.7239 17.1487 5.19456 16.9531 5.7439 16.9537C6.2939 16.9537 6.7649 17.1497 7.1569 17.5417C7.5489 17.9337 7.74457 18.4044 7.7439 18.9537C7.7439 19.5037 7.5479 19.9747 7.1559 20.3667C6.7639 20.7587 6.29323 20.9544 5.7439 20.9537ZM5.7439 14.9537C5.1939 14.9537 4.7229 14.7577 4.3309 14.3657C3.9389 13.9737 3.74323 13.5031 3.7439 12.9537C3.7439 12.4037 3.9399 11.9327 4.3319 11.5407C4.7239 11.1487 5.19456 10.9531 5.7439 10.9537C6.2939 10.9537 6.7649 11.1497 7.1569 11.5417C7.5489 11.9337 7.74457 12.4044 7.7439 12.9537C7.7439 13.5037 7.5479 13.9747 7.1559 14.3667C6.7639 14.7587 6.29323 14.9544 5.7439 14.9537ZM5.7439 8.95374C5.1939 8.95374 4.7229 8.75774 4.3309 8.36574C3.9389 7.97374 3.74323 7.50307 3.7439 6.95374C3.7439 6.40374 3.9399 5.93274 4.3319 5.54074C4.7239 5.14874 5.19456 4.95307 5.7439 4.95374C6.2939 4.95374 6.7649 5.14974 7.1569 5.54174C7.5489 5.93374 7.74457 6.4044 7.7439 6.95374C7.7439 7.50374 7.5479 7.97474 7.1559 8.36674C6.7639 8.75874 6.29323 8.9544 5.7439 8.95374Z"
                   ></path>
                 </svg>
               </div>
@@ -248,8 +255,12 @@ export default function FilmDetails() {
             ></div>
             {/* Rating */}
             <div
-              className="Rate bg-dark p-[0.5em] rounded-lg text-center absolute
-                             bottom-[0.8em] right-[1.8em] font-bold bg-opacity-60"
+              className={`bg-dark p-[0.5em] rounded-lg text-center absolute
+                             bottom-[0.8em] right-[1.8em] font-bold bg-opacity-60 ${
+                               rating >= 8.0 ? "high" : ""
+                             } ${
+                rating >= 6.0 && rating < 8.0 ? "medium" : ""
+              } ${rating < 6 ? "low" : ""}`}
             >
               {rating}
             </div>
@@ -259,10 +270,13 @@ export default function FilmDetails() {
           {/* Trailer */}
           <div className="">
             <iframe
-              className=" absolute right-0 top-[18%] z-[-1] tranform-opacity duration-1000
+              className={`absolute right-0 top-[18%] z-[-1] tranform-opacity duration-1000
                             left-[18%] overflow-hidden px-[3em] pt-[1em] pb-[1em] bg-dark 
-                              rounded-[0.6em] border-double border-main border-[0.2em] opacity-0"
-              id="filmTrailer"
+                              rounded-[0.6em] border-double border-main border-[0.2em] opacity-0 ${
+                                showTrailer
+                                  ? "z-[1] opacity-100"
+                                  : "z[-1] opacity-0"
+                              }`}
               width="950"
               height="550"
               src={
@@ -276,9 +290,10 @@ export default function FilmDetails() {
               allowFullScreen
             ></iframe>
             <FontAwesomeIcon
-              className="absolute top-[20%] left-[82%] text-main cursor-pointer z-[-1] opacity-0 transition-opacity duration-700"
-              id="CancelButton"
-              onClick={hideTrailer}
+              className={`absolute top-[20%] left-[82%] text-main cursor-pointer z-[-1] opacity-0 transition-opacity duration-700 ${
+                showTrailer ? "z-[1] opacity-100" : "z-[-1] opacity-0"
+              }`}
+              onClick={() => setShowTrailer(false)}
               icon={faXmarkCircle}
             />
           </div>

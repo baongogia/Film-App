@@ -1,15 +1,12 @@
 import React, { useEffect } from "react";
-import { GoogleLogin } from "@react-oauth/google";
+import { useGoogleLogin } from "@react-oauth/google";
 import { clientID } from "../../JS/API";
 import { gapi } from "gapi-script";
-import jwt_decode from "jwt-decode";
+import "./GGbutton.css";
+import axios from "axios";
 
-function GGLogin({ getUserData }) {
-
-  const sendData = (userData) => {
-    getUserData(userData);
-  };
-
+function GGLogin({ openLogIn }) {
+  // Client
   useEffect(() => {
     function start() {
       gapi.client.init({
@@ -20,46 +17,51 @@ function GGLogin({ getUserData }) {
     gapi.load("client: auth2", start);
   }, []);
 
-  // Success
-  const onSuccess = (res) => {
-    // get user data
-    var userData = jwt_decode(res.credential);
-    console.log("LOGIN SUCCESS! Current user: ", userData);
-    sendData(userData);
-    
-    // Save login status
-    localStorage.setItem("isLoggedIn", "true");
-
-    // Other
-    const log = document.querySelector(".navbar__sign");
-    log.style.display = "none";
-    const loginBox = document.getElementById("LoginPage");
-    loginBox.style.display = "none";
-    const userprofile = document.querySelector(".user-profile");
-    userprofile.style.display = "block";
-    const inforbox = document.querySelector('.infor-box')
-    inforbox.style.opacity = "0";
-    const controls = document.querySelectorAll('.control-button');
-    controls.forEach((control) => {
-      control.style.pointerEvents = 'auto';
-    });
-  };
-
-  // Failure
-  const onFailure = (res) => {
-    console.log("LOGIN FAILED! res: ", res);
-  };
+  const login = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      try {
+        const data = await axios.get(
+          "https://www.googleapis.com/oauth2/v3/userinfo",
+          {
+            headers: {
+              Authorization: `Bearer ${tokenResponse.access_token}`,
+            },
+          }
+        );
+        // save Data
+        localStorage.setItem("userData", JSON.stringify(data));
+      } catch (error) {
+        console.error(error);
+      }
+      // Save
+      localStorage.setItem("isLoggedIn", "true");
+      window.location.reload();
+    },
+  });
 
   return (
-    <div id="GGSignIn" className="absolute bottom-[2.8em] left-[8%] w-[8.3em]">
-      <GoogleLogin
-        clientId={clientID}
-        text={"signin"}
-        onSuccess={onSuccess}
-        onFailure={onFailure}
-        cookiePolicy={"single _host_origin"}
-        isSignedIn={true}
-      />
+    <div
+      onClick={() => login()}
+      className={`w-[8.3em] opacity-0 transition-opacity duration-[500ms] ${
+        openLogIn ? "opacity-100" : "opacity-0 z-[-1]"
+      }`}
+    >
+      <div className="neonbutton ml-4 h-[5em] cursor-pointer ">
+        <div className="neon" href="neon">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <div className="flex flex-row justify-center items-center">
+            Sign in with Google
+            <img
+              className="w-[10%] ml-2"
+              src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png"
+              alt=""
+            />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

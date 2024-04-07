@@ -52,7 +52,7 @@ function ContactPage() {
             <label htmlFor="message"></label>
             <textarea
               name="message"
-              placeholder="I'd like to chat about"
+              placeholder="My feedback is"
               id="message_input"
               cols={30}
               rows={5}

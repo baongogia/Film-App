@@ -13,9 +13,7 @@ export default function MiniList({ index, Title, Nation, Year, Image }) {
   };
 
   return (
-    <div
-      className={`content__list--wrap ${isFlipped ? "flipped" : ""}`}
-    >
+    <div className={`content__list--wrap ${isFlipped ? "flipped" : ""}`}>
       <div
         className="content__list--icon"
         style={{ backgroundImage: `url('${IMG_URL}${Image}')` }}
@@ -23,8 +21,11 @@ export default function MiniList({ index, Title, Nation, Year, Image }) {
         <div className="flip-card-front">
           <div className="content__list__title--name">{Title}</div>
           <div className="play-icon">
-            <FontAwesomeIcon icon={faPlayCircle}/>
-            <Link className="absolute w-full h-full left-0" to={`/FilmDetails/${index}`}></Link>
+            <Link
+              to={`/FilmDetails/${index}`}
+            >
+              <FontAwesomeIcon icon={faPlayCircle} />
+            </Link>
           </div>
           <div className="content__list__title--details" onClick={toggleFlip}>
             Details

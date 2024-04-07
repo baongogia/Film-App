@@ -72,14 +72,11 @@
       font-size: 0.8rem;
     }
   
-    & button {
+    & .inco-btn {
       width: fit-content;
-      background-color: rgba(0,0,0,0.1);
-      color: white;
       border: 2px solid white;
       border-radius: 0.25rem;
       padding: 0.75rem;
-      cursor: pointer;
     }
   }
   
@@ -126,7 +123,7 @@
     .content {
       & .title        { font-size: 1rem; }
       & .description  { font-size: 0.7rem; }
-      & button        { font-size: 0.7rem; }
+      & .inco-btn        { font-size: 0.7rem; }
     }
     .item {
       width: 160px;
@@ -143,7 +140,7 @@
     .content {
       & .title        { font-size: 0.9rem; }
       & .description  { font-size: 0.65rem; }
-      & button        { font-size: 0.7rem; }
+      & .inco-btn        { font-size: 0.7rem; }
     }
     .item {
       width: 130px;

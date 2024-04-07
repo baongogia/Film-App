@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { API_KEY } from "../../../../JS/API";
+import { API_KEY, Auth } from "../../../../JS/API";
 import SlideShow from "../../HomePage/SlideShow";
 import Slider from "react-slick";
 import ContentSearch from "../../HomePage/ContentSearch";
 import FilmList from "../../FilmDetails/FilmList";
 
 function GenresPage() {
-  const [showList, setShowList] = useState([])
+  const [showList, setShowList] = useState([]);
   const [actionList, setActionList] = useState([]);
   const [horrorList, setHorrorList] = useState([]);
   const [romanceList, setRomanceList] = useState([]);
@@ -18,93 +18,31 @@ function GenresPage() {
     method: "GET",
     headers: {
       accept: "application/json",
-      Authorization:
-        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5NzM4MzM4NjU4OWM5MmJlNWVhMDNiZDA0ZmI4MGRiOCIsInN1YiI6IjY1MjM3NDU2NzQ1MDdkMDBhYzRhOTU3ZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.B9vrCoEGitOlsPTq6sfgWxJjEQsfkGN04YR8uO4FLBY",
+      Authorization: `Bearer ${Auth}`,
     },
   };
 
-  useEffect(() => {
-    fetch(
-      `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_genres=10770`,
-      options
-    )
-      .then((response) => response.json())
-      .then((response) => {
-        setShowList(response.results);
-      })
-      .catch((err) => console.error(err));
-  }, []);
+  const fetchMoviesByGenre = async (genreId, setStateFunction) => {
+    try {
+      const response = await fetch(
+        `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_genres=${genreId}`,
+        options
+      );
+      const data = await response.json();
+      setStateFunction(data.results);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
-    fetch(
-      `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_genres=28`,
-      options
-    )
-      .then((response) => response.json())
-      .then((response) => {
-        setActionList(response.results);
-      })
-      .catch((err) => console.error(err));
-  }, []);
-
-  useEffect(() => {
-    fetch(
-      `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_genres=27`,
-      options
-    )
-      .then((response) => response.json())
-      .then((response) => {
-        setHorrorList(response.results);
-      })
-      .catch((err) => console.error(err));
-  }, []);
-
-  useEffect(() => {
-    fetch(
-      `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_genres=10749`,
-      options
-    )
-      .then((response) => response.json())
-      .then((response) => {
-        setRomanceList(response.results);
-      })
-      .catch((err) => console.error(err));
-  }, []);
-
-  useEffect(() => {
-    fetch(
-      `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_genres=10751`,
-      options
-    )
-      .then((response) => response.json())
-      .then((response) => {
-        setFamilyList(response.results);
-      })
-      .catch((err) => console.error(err));
-  }, []);
-
-  useEffect(() => {
-    fetch(
-      `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_genres=35`,
-      options
-    )
-      .then((response) => response.json())
-      .then((response) => {
-        setComedyList(response.results);
-      })
-      .catch((err) => console.error(err));
-  }, []);
-
-  useEffect(() => {
-    fetch(
-      `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_genres=10402`,
-      options
-    )
-      .then((response) => response.json())
-      .then((response) => {
-        setMusicList(response.results);
-      })
-      .catch((err) => console.error(err));
+    fetchMoviesByGenre(53, setShowList); // Drama
+    fetchMoviesByGenre(28, setActionList); // Action
+    fetchMoviesByGenre(27, setHorrorList); // Horror
+    fetchMoviesByGenre(10749, setRomanceList); // Romance
+    fetchMoviesByGenre(10751, setFamilyList); // Family
+    fetchMoviesByGenre(35, setComedyList); // Comedy
+    fetchMoviesByGenre(10402, setMusicList); // Music
   }, []);
 
   const settings = {
@@ -131,6 +69,7 @@ function GenresPage() {
               release={movie.release_date}
               vote={movie.vote_average}
               overview={movie.overview}
+              filmID={movie.id}
             />
           ))}
         </Slider>

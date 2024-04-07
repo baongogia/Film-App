@@ -15,7 +15,7 @@ export default function NavList() {
           <NavLink to="/GenresPage">GENRES</NavLink>
         </li>
         <li className="nav__list--unit">
-          <NavLink to="/aboutPage">ABOUT</NavLink>
+          <NavLink to="/aboutPage">TOP RATED</NavLink>
         </li>
         <li className="nav__list--unit">
           <NavLink to="/ContactPage">CONTACT</NavLink>

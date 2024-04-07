@@ -10,7 +10,8 @@ import HideNav from "./components/JS/HideDetails";
 import ContactPage from "./components/JSX/Content/NavList/ContactPage/ContactPage";
 import GenresPage from "./components/JSX/Content/NavList/GenresPage/GenresPage";
 import NewPage from "./components/JSX/Content/NavList/NewsPage/NewPage";
-import AboutPage from "./components/JSX/Content/NavList/AboutPage/AboutPage";
+import TopRatedPage from "./components/JSX/Content/NavList/TopRatedPage/TopRatedPage";
+import Profile from "./components/JSX/Content/NavList/ProfilePage/Profile";
 
 function App() {
   return (
@@ -32,10 +33,12 @@ function App() {
         />
         <Route path="/contactPage" element={<ContactPage />} />
         <Route path="/GenresPage" element={<GenresPage />} />
-        <Route path="/aboutPage" element={<AboutPage />} />
+        <Route path="/aboutPage" element={<TopRatedPage />} />
         <Route path="/newPage" element={<NewPage />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="/filmDetails/:id" element={<FilmDetails />} />
       </Routes>
+
 
       <HideNav>
         <Footer />

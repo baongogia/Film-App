@@ -3,14 +3,30 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFire, faSearch } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { API_KEY, BASE_URL } from "../../../JS/API";
-import { hideSearchBox, ratingFilm, showSearchBox } from "../../../JS/Action";
 import SearchMiniList from "./SearchMiniList";
 
 export default function ContentSearch() {
+  const [openSearchBox, setOpenSearchBox] = useState(false);
   const [searchQuery, updateSearchQuery] = useState("");
   const [timeoutId, updateTimeoutId] = useState();
   const [movieList, updateMovieList] = useState([]);
   const [trendList, setTrendList] = useState([]);
+
+  useEffect(() => {
+    const points = document.querySelectorAll(".Rate");
+
+    points.forEach((point) => {
+      const rating = parseFloat(point.innerHTML);
+
+      if (rating >= 8.0) {
+        point.classList.add("high");
+      } else if (rating >= 6.0 && rating < 8.0) {
+        point.classList.add("medium");
+      } else {
+        point.classList.add("low");
+      }
+    });
+  }, []);
 
   useEffect(() => {
     fetch(BASE_URL + "/3/discover/movie?api_key=" + API_KEY)
@@ -41,7 +57,7 @@ export default function ContentSearch() {
     <div id="search" className="content__search dark:bg-dark">
       <img
         className="content__search--img"
-        src="https://wallpapers.com/images/featured/movie-9pvmdtvz4cb0xl37.jpg"
+        src="https://wallpapers.com/images/hd/abstract-background-6m6cjbifu3zpfv84.jpg"
         alt="#"
       ></img>
       <div className="content__search--overlay"></div>
@@ -60,8 +76,8 @@ export default function ContentSearch() {
             type="text"
             placeholder="Search..."
             value={searchQuery}
-            onFocus={showSearchBox}
-            onBlur={hideSearchBox}
+            onFocus={() => setOpenSearchBox(true)}
+            onBlur={() => setTimeout(() => setOpenSearchBox(false), 200)}
             onChange={onTextChange}
             name="earch"
           ></input>
@@ -72,10 +88,13 @@ export default function ContentSearch() {
           />
           {/* Search box */}
           <div
-            id="SearchBox"
-            onLoad={ratingFilm}
-            className="search-box absolute top-[15.7em] rounded-[0.8em] overflow-auto border-solid border-[0.2em]
-                         border-main opacity-0 transition-opacity duration-300 pointer-events-none"
+            // onLoad={ratingFilm}
+            className={`search-box absolute top-[15.7em] rounded-[0.8em] overflow-auto border-solid border-[0.2em]
+                         border-main opacity-0 transition-opacity duration-300 pointer-events-none ${
+                           openSearchBox
+                             ? "opacity-100 pointer-events-auto"
+                             : "opacity-0 pointer-events-none"
+                         }`}
           >
             <div className="w-[33.3em] h-[13em] bg-white overflow-auto dark:bg-dark">
               {movieList?.length ? (

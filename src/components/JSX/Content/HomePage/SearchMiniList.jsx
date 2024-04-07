@@ -2,16 +2,12 @@ import React from "react";
 import { ERROR_IMG, IMG_URL } from "../../../JS/API";
 import { Link } from "react-router-dom";
 
-function SearchMiniList({id, poster, title, release, rate}) {
+function SearchMiniList({ id, poster, title, release, rate }) {
   return (
     <div className="group hover:bg-tx cursor-pointer mt-[0.5em] rounded-[0.2em] ml-[0.5em]">
       <div className="flex relative">
         <img
-          src={
-           poster
-              ? `${IMG_URL}${poster}`
-              : `${ERROR_IMG}`
-          }
+          src={poster ? `${IMG_URL}${poster}` : `${ERROR_IMG}`}
           className="w-[5em] h-[5em] rounded-[0.2em] object-cover object-center "
           alt=""
         />
@@ -27,7 +23,13 @@ function SearchMiniList({id, poster, title, release, rate}) {
             Released: {release}
           </div>
         </div>
-        <div className="Rate mt-3 bg-tx ml-6 p-[1em] h-full rounded-[0.2em] font-bold mr-[0.5em] dark:bg-slate-700 group-hover:bg-white">
+        <div
+          className={`mt-3 bg-tx ml-6 p-[1em] h-full rounded-[0.2em] font-bold mr-[0.5em] dark:bg-slate-700 group-hover:bg-white ${
+            rate >= 8.0 ? "high" : ""
+          } ${rate >= 6.0 && rate < 8.0 ? "medium" : ""} ${
+            rate < 6 ? "low" : ""
+          }`}
+        >
           {rate}
         </div>
       </div>

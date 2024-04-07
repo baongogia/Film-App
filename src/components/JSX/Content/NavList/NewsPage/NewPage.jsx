@@ -1,44 +1,36 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./news.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCircleArrowLeft,
   faCircleArrowRight,
 } from "@fortawesome/free-solid-svg-icons";
+import { Auth, IMG_URL } from "../../../../JS/API";
+import { Link } from "react-router-dom";
 
 function NewPage() {
-  const list = [
-    {
-      img: "https://cdn.mos.cms.futurecdn.net/dP3N4qnEZ4tCTCLq59iysd.jpg",
-      title: "Lossless Youths",
-      infor: "Lorem ipsum, dolor sit amet consectetur adipisicing elit.",
+  // API
+  const [incomingList, setIncomingList] = useState([]);
+
+  const list = incomingList.slice(1, 7);
+
+  const options = {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+      Authorization: `Bearer ${Auth}`,
     },
-    {
-      img: "https://i.redd.it/tc0aqpv92pn21.jpg",
-      title: "Estrange Bond",
-      infor: "Lorem ipsum, dolor sit amet consectetur adipisicing elit.",
-    },
-    {
-      img: "https://wharferj.files.wordpress.com/2015/11/bio_north.jpg",
-      title: "The Gate Keeper",
-      infor: "Lorem ipsum, dolor sit amet consectetur adipisicing elit.",
-    },
-    {
-      img: "https://images7.alphacoders.com/878/878663.jpg",
-      title: 'Last Trace Of Us"',
-      infor: "Lorem ipsum, dolor sit amet consectetur adipisicing elit.",
-    },
-    {
-      img: "https://theawesomer.com/photos/2017/07/simon_stalenhag_the_electric_state_6.jpg",
-      title: "Urban Decay",
-      infor: "Lorem ipsum, dolor sit amet consectetur adipisicing elit.",
-    },
-    {
-      img: "https://da.se/app/uploads/2015/09/simon-december1994.jpg",
-      title: "The Migration",
-      infor: "Lorem ipsum, dolor sit amet consectetur adipisicing elit.",
-    },
-  ];
+  };
+
+  useEffect(() => {
+    fetch(
+      "https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=5",
+      options
+    )
+      .then((response) => response.json())
+      .then((response) => setIncomingList(response.results))
+      .catch((err) => console.error(err));
+  }, []);
 
   const sliderRef = useRef(null);
 
@@ -47,17 +39,21 @@ function NewPage() {
       const slider = sliderRef.current;
       const items = slider.querySelectorAll(".item");
 
-      if (e.target.matches(".next")) {
+      if (e.target.closest(".next")) {
         slider.append(items[0]);
-      } else if (e.target.matches(".prev")) {
+      } else if (e.target.closest(".prev")) {
         slider.prepend(items[items.length - 1]);
       }
     };
 
-    document.addEventListener("click", activate);
+    const nextBtn = document.querySelector(".next");
+    const prevBtn = document.querySelector(".prev");
+    nextBtn.addEventListener("click", activate);
+    prevBtn.addEventListener("click", activate);
 
     return () => {
-      document.removeEventListener("click", activate);
+      nextBtn.removeEventListener("click", activate);
+      prevBtn.removeEventListener("click", activate);
     };
   }, []);
 
@@ -69,13 +65,20 @@ function NewPage() {
             <li
               className="item"
               style={{
-                backgroundImage: `url(${poster.img})`,
+                backgroundImage: `url(${IMG_URL}${poster.backdrop_path})`,
               }}
             >
               <div className="content">
                 <h2 className="title">{poster.title}</h2>
-                <p className="description">{poster.infor}</p>
-                <button>Read More</button>
+                <p className="description">{poster.overview}</p>
+                <div className="flex">
+                  <div className="font-bold inco-btn">INCOMING</div>
+                  <Link className="ml-6" to={`/FilmDetails/${poster.id}`}>
+                    <div className=" inco-btn font-bold hover:bg-white hover:text-dark">
+                      WATCH TRAILER
+                    </div>
+                  </Link>
+                </div>
               </div>
             </li>
           ))}
@@ -86,6 +89,7 @@ function NewPage() {
             name="arrow-back-outline"
             icon={faCircleArrowLeft}
           ></FontAwesomeIcon>
+
           <FontAwesomeIcon
             className="btn next"
             name="arrow-forward-outline"
