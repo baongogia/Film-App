@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useGoogleLogin } from "@react-oauth/google";
 import { clientID } from "../../JS/API";
 import { gapi } from "gapi-script";
-import "./GGbutton.css";
+import "./CSS/GGbutton.css";
 import axios from "axios";
 
 function GGLogin({ openLogIn }) {

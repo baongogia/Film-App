@@ -9,7 +9,7 @@ export default function NavSign({ openLogIn, setOpenLogIn, setOpenSignUp }) {
   }, []);
 
   return (
-    <div className={`navbar__sign ${isLoggedIn ? "hidden" : "flex"}`}>
+    <div className={`navbar__sign w-13 md:w-[15em] lg:mb-0 md:mb-8 ${isLoggedIn ? "hidden" : "flex"}`}>
       <div
         onClick={() => setOpenLogIn(true)}
         className={`navbar__user--in uppercase font-bold ${

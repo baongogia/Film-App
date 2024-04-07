@@ -5,25 +5,25 @@ import { NavLink } from "react-router-dom";
 
 export default function NavList() {
   return (
-      <ul className="nav__list">
-        <li className="nav__list--unit">
-          <NavLink to="/">
-            HOME
-          </NavLink>
-        </li>
-        <li className="nav__list--unit">
-          <NavLink to="/GenresPage">GENRES</NavLink>
-        </li>
-        <li className="nav__list--unit">
-          <NavLink to="/aboutPage">TOP RATED</NavLink>
-        </li>
-        <li className="nav__list--unit">
-          <NavLink to="/ContactPage">CONTACT</NavLink>
-        </li>
-        <li className="nav__list--unit">
-          <NavLink to="/newPage">NEWS</NavLink>
+    <ul className="justify-center font-bold z-10 hidden md:flex ">
+      <li className="nav__list--unit">
+        <NavLink to="/">HOME</NavLink>
+      </li>
+      <li className="nav__list--unit">
+        <NavLink to="/GenresPage">GENRES</NavLink>
+      </li>
+      <li className="nav__list--unit">
+        <NavLink to="/aboutPage">TOP RATED</NavLink>
+      </li>
+      <li className="nav__list--unit">
+        <NavLink to="/ContactPage">CONTACT</NavLink>
+      </li>
+      <li className="nav__list--unit">
+        <NavLink to="/newPage">
+          NEWS
           <FontAwesomeIcon className="trending-icon" icon={faFire} />
-        </li>
-      </ul>
+        </NavLink>
+      </li>
+    </ul>
   );
 }

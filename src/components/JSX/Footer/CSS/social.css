@@ -1,0 +1,72 @@
+.social-title {
+  font-family: sans-serif;
+  font-weight: normal;
+  font-size: 15px;
+  letter-spacing: 4px;
+  background-color: white;
+  text-align: center;
+  padding-bottom: 10px;
+}
+
+.social-media {
+  display: flex;
+  justify-content: center;
+  background-color: white;
+}
+
+.social-icon {
+  display: flex;
+  background: #e3edf7;
+  height: 55px;
+  width: 55px;
+  margin: 0 15px;
+  border-radius: 8px;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  box-shadow: 6px 6px 10px -1px rgba(0, 0, 0, 0.15),
+    -6px -6px 10px -1px rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(0, 0, 0, 0);
+  transition: transform 0.5s;
+}
+
+.social-icon i {
+  cursor: pointer;
+  font-size: 30px;
+  color: #777;
+  transition: transform 0.5s;
+}
+
+.social-icon:hover {
+  box-shadow: inset 4px 4px 6px -1px rgba(0, 0, 0, 0.2),
+    inset -4px -4px 6px -1px rgba(255, 255, 255, 0.7),
+    -0.5px -0.5px 0px rgba(255, 255, 255, 1),
+    0.5px 0.5px 0px rgba(0, 0, 0, 0.15), 0px 12px 10px -10px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.01);
+  transform: translateY(2px);
+}
+
+.social-icon:hover i {
+  transform: scale(0.9);
+}
+
+.social-icon:hover .fa-facebook {
+  color: #3b5998;
+}
+
+.social-icon:hover .fa-twitter {
+  color: #00acee;
+}
+
+.social-icon:hover .fa-github {
+  color: #000000;
+}
+
+.social-icon:hover .fa-instagram {
+
+  color: #ee2a7b
+}
+
+.social-icon:hover .fa-linkedin-in {
+  color: #3b5998;
+}

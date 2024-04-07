@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlayCircle, faXmarkCircle } from "@fortawesome/free-solid-svg-icons";
 import { IMG_URL } from "../../../JS/API";
-export default function MiniList({ index, Title, Nation, Year, Image }) {
+export default function MiniList({ index, Title, originalTitle, Year, Image }) {
   // Flip Card Status
   const [isFlipped, setIsFlipped] = useState(false);
 
@@ -13,9 +13,9 @@ export default function MiniList({ index, Title, Nation, Year, Image }) {
   };
 
   return (
-    <div className={`content__list--wrap ${isFlipped ? "flipped" : ""}`}>
+    <div className={`content__list--wrap relative ${isFlipped ? "flipped" : ""}`}>
       <div
-        className="content__list--icon"
+        className="content__list--icon w-[88.479vw] h-[70vw] md:w-[43.8vw] md:h-[26vw] lg:w-[28.76vw] lg:h-[15.5vw]"
         style={{ backgroundImage: `url('${IMG_URL}${Image}')` }}
       >
         <div className="flip-card-front">
@@ -38,7 +38,7 @@ export default function MiniList({ index, Title, Nation, Year, Image }) {
 
           <div className="content__list__title--infor">
             <div className="content__list__title--nation">
-              LANGUAGES: {Nation}
+              {originalTitle}
             </div>
             <div className="content__list__title--year">REALISE: {Year}</div>
           </div>

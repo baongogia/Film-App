@@ -8,7 +8,7 @@ function SearchMiniList({ id, poster, title, release, rate }) {
       <div className="flex relative">
         <img
           src={poster ? `${IMG_URL}${poster}` : `${ERROR_IMG}`}
-          className="w-[5em] h-[5em] rounded-[0.2em] object-cover object-center "
+          className="w-[3em] h-[3em] md:w-[5em] md:h-[5em] rounded-[0.2em] object-cover object-center"
           alt=""
         />
         <Link
@@ -16,10 +16,10 @@ function SearchMiniList({ id, poster, title, release, rate }) {
           to={`/FilmDetails/${id}`}
         ></Link>
         <div className="flex flex-col justify-between w-[20em] ml-8 flex-nowrap">
-          <div className="text-[1.5em] font-medium text-main h-9 w-[full] truncate">
+          <div className="text-[1.2em] md:text-[1.5em] font-medium text-main h-9 w-[full] truncate">
             {title}
           </div>
-          <div className="text-[1.5em] font-[3em] w-full">
+          <div className="text-[1.2em] md:text-[1.5em] font-[3em] w-full">
             Released: {release}
           </div>
         </div>

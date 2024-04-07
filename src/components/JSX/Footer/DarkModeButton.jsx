@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import React from "react";
-import "./Darkmode.css";
+import "./CSS/Darkmode.css";
 export default function DarkModeButton() {
   const [theme, setTheme] = useState("light");
   const getTheme = localStorage.getItem("theme");
@@ -10,7 +10,7 @@ export default function DarkModeButton() {
     const IS_PRESSED = BUTTON.matches("[aria-pressed=true]");
     document.body.setAttribute("data-dark-mode", IS_PRESSED ? false : true);
     BUTTON.setAttribute("aria-pressed", IS_PRESSED ? false : true);
-  }
+  };
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme");
@@ -21,7 +21,7 @@ export default function DarkModeButton() {
       setTheme(savedTheme);
     }
   }, []);
-  
+
   useEffect(() => {
     if (getTheme === "dark") {
       document.documentElement.classList.add("dark");
@@ -29,17 +29,23 @@ export default function DarkModeButton() {
       document.documentElement.classList.remove("dark");
     }
   }, [theme]);
-  
+
   const switchDarkMode = () => {
-    const newTheme = theme === "dark" ? "light" : "dark"; 
-    setTheme(newTheme); 
-    localStorage.setItem("theme", newTheme); 
-    toggle()
+    const newTheme = theme === "dark" ? "light" : "dark";
+    setTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
+    toggle();
   };
-  
 
   return (
-    <div className="dark__mode--btn">
+    <div className="flex flex-col justify-between items-center h-[6em]">
+      <div
+        className={`uppercase w-[9em] md:w-full social-title dark:bg-dark ${
+          theme === "light" ? "" : "text-main"
+        }  `}
+      >
+        dark mode: {theme === "light" ? "off" : "on"}{" "}
+      </div>
       <button
         onClick={() => {
           switchDarkMode();

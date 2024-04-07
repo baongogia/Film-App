@@ -13,14 +13,14 @@ function User({ name, avatar }) {
 
   return (
     <div className={`ml-[12em] ${isLoggedIn ? "block" : "hidden"}`}>
-      <div className="absolute w-[14em] h-[5em] bottom-0 mb-3 right-2 flex items-center justify-around z-1">
-        <div className="font-bold text-[1.4em] text-main">Hi {name} !</div>
+      <div className="absolute h-[5em] bottom-0 mb-3 right-2 flex items-center justify-around z-1">
+        <div className="font-bold text-[1.4em] text-main mr-3 max-w-[25em]">Hi {name} !</div>
         <img
           onClick={() => (showUser ? setShowUser(false) : setShowUser(true))}
           src={avatar}
-          alt=""
+          alt="user-avatar"
           id="avatar"
-          className="w-[2.8em] rounded-full  cursor-pointer"
+          className="w-[2.8em] mr-4 rounded-full  cursor-pointer"
         />
       </div>
       {/* Infor */}

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import ContentSearch from "./ContentSearch";
 // import { MyContext } from "../FilmDetails/ContextProvider";
 import FilmList from "../FilmDetails/FilmList";
@@ -10,6 +10,8 @@ export default function Content() {
   const [tvseriesList, setTvSeriesList] = useState([]);
   const [chartsList, setChartList] = useState([]);
   const [trendingList, setTrendingList] = useState([]);
+
+  // console.log(theaterList)
 
   const options = {
     method: "GET",
@@ -42,15 +44,15 @@ export default function Content() {
   }, []);
 
   return (
-    <div className="content__all">
+    <div className="">
+      <FilmList filmList={trendingList} listName={"TRENDING"} />
       <FilmList filmList={theaterList} listName={"IN THEATERS"} />
-      <FilmList filmList={incomingList} listName={"COMING SOON"} />
 
       <ContentSearch />
 
       <FilmList filmList={chartsList} listName={"CHARTS"} />
       <FilmList filmList={tvseriesList} listName={"TV SERIES"} />
-      <FilmList filmList={trendingList} listName={"TRENDING"} />
+      <FilmList filmList={incomingList} listName={"COMING SOON"} />
     </div>
   );
 }

@@ -1,41 +1,33 @@
 import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faFacebookSquare,
-  faSquareXTwitter,
-  faInstagramSquare,
-  faYoutubeSquare,
-  faTiktok,
-} from "@fortawesome/free-brands-svg-icons";
+import "./CSS/social.css";
 
 export default function FooterContact() {
   return (
-    <div className="footer__infor-contact">
-      <div className="footer__infor-contact-page"></div>
+    <div className="">
+      <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      />
 
-      <div className="footer__infor-contact--list">
-        <FontAwesomeIcon
-          className="footer__infor-contact--list--icon hover:opacity-90"
-          id="facebook"
-          icon={faFacebookSquare}
-        />
-        <FontAwesomeIcon
-          className="footer__infor-contact--list--icon hover:opacity-90"
-          icon={faInstagramSquare}
-        />
-        <FontAwesomeIcon
-          className="footer__infor-contact--list--icon hover:opacity-90"
-          icon={faSquareXTwitter}
-        />
-        <FontAwesomeIcon
-          className="footer__infor-contact--list--icon hover:opacity-90"
-          icon={faYoutubeSquare}
-        />
-        <FontAwesomeIcon
-          className="footer__infor-contact--list--icon hover:opacity-90"
-          icon={faTiktok}
-        />
-      </div>
+        <h1 className="social-title dark:bg-dark">FOLLOW US ON SOCIAL MEDIA</h1>
+
+        <div className="social-media w-[24em] md:w-full dark:bg-dark">
+          <div className="social-icon" href="#">
+            <i className="fab fa-facebook "></i>
+          </div>
+          <div className="social-icon" href="#">
+            <i className="fab fa-twitter"></i>
+          </div>
+          <div className="social-icon" href="#">
+            <i className="fab fa-github"></i>
+          </div>
+          <div className="social-icon" href="#">
+            <i className="fab fa-instagram"></i>
+          </div>
+          <div className="social-icon" href="#">
+            <i className="fab fa-linkedin-in"></i>
+          </div>
+        </div>
     </div>
   );
 }

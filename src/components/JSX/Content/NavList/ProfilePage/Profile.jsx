@@ -13,7 +13,6 @@ import { faLink } from "@fortawesome/free-solid-svg-icons";
 function Profile() {
   // get user data
   const userData = JSON.parse(localStorage.getItem("userData"));
-  console.log(userData);
 
   return (
     <div className="profile">

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmarkCircle } from "@fortawesome/free-solid-svg-icons";
-import "./login.css";
-import "./GGbutton.css";
+import "./CSS/login.css";
+import "./CSS/GGbutton.css";
 import GGLogin from "./GGLogin";
+import { twMerge } from "tailwind-merge";
 
 export default function LoginPage({
   openLogIn,
@@ -20,9 +21,12 @@ export default function LoginPage({
 
   return (
     <div
-      className={`signup absolute top-[150%] left-[32%] bg-dark h-[40em] w-[35em] z-[-1] opacity-0 will-change-transform 
+      className={`signup absolute bg-dark h-[40em] w-[35em] z-[-1] opacity-0 will-change-transform 
                      rounded-[1em] border-double border-main border-[0.3em] transition-all duration-700
-                     scale-0 ${isLoggedIn ? "hidden" : "block"} ${
+                     scale-0  top-[150%]
+                     lg:left-[32%] lg:top-[170%]
+                     md:top-[120%] md:left-[21%]
+                      ${isLoggedIn ? "hidden" : "block"} ${
         openLogIn ? "opacity-100 z-[15] scale-100" : ""
       }  ${openSignUp ? "opacity-100 z-[10]  scale-100" : ""}`}
     >

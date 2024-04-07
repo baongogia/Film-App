@@ -69,9 +69,9 @@ function NewPage() {
               }}
             >
               <div className="content">
-                <h2 className="title">{poster.title}</h2>
+                <h2 className="title text-center">{poster.title}</h2>
                 <p className="description">{poster.overview}</p>
-                <div className="flex">
+                <div className="block md:flex">
                   <div className="font-bold inco-btn">INCOMING</div>
                   <Link className="ml-6" to={`/FilmDetails/${poster.id}`}>
                     <div className=" inco-btn font-bold hover:bg-white hover:text-dark">

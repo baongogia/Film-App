@@ -4,15 +4,48 @@ import SlideShow from "../../HomePage/SlideShow";
 import Slider from "react-slick";
 import ContentSearch from "../../HomePage/ContentSearch";
 import FilmList from "../../FilmDetails/FilmList";
+import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
+
+function SampleNextArrow(props) {
+  const { onClick } = props;
+  return (
+    <div className="">
+      <div
+        className="text-[4em] absolute top-0 right-0 cursor-pointer pl-2 pt-[35vh] pb-[41.5vh]
+        hover:bg-zinc-400 hover:bg-opacity-30 mt-6"
+        onClick={onClick}
+      >
+        <div className="">
+          <ArrowForwardIos fontSize="large" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function SamplePrevArrow(props) {
+  const { onClick } = props;
+  return (
+    <div className="">
+      <div
+        className="text-[4em] absolute text-center cursor-pointer pl-3 pt-[35vh] pb-[41.5vh]
+       hover:bg-zinc-400 hover:bg-opacity-30 z-[1] mt-5"
+        onClick={onClick}
+      >
+        <ArrowBackIos className="" fontSize="large" />
+      </div>
+    </div>
+  );
+}
 
 function GenresPage() {
   const [showList, setShowList] = useState([]);
   const [actionList, setActionList] = useState([]);
   const [horrorList, setHorrorList] = useState([]);
   const [romanceList, setRomanceList] = useState([]);
-  const [familyList, setFamilyList] = useState([]);
+  const [dramaList, setDramaList] = useState([]);
   const [comedyList, setComedyList] = useState([]);
-  const [musicList, setMusicList] = useState([]);
+  const [sciencefList, setSciencefList] = useState([]);
 
   const options = {
     method: "GET",
@@ -36,13 +69,13 @@ function GenresPage() {
   };
 
   useEffect(() => {
-    fetchMoviesByGenre(53, setShowList); // Drama
-    fetchMoviesByGenre(28, setActionList); // Action
-    fetchMoviesByGenre(27, setHorrorList); // Horror
-    fetchMoviesByGenre(10749, setRomanceList); // Romance
-    fetchMoviesByGenre(10751, setFamilyList); // Family
-    fetchMoviesByGenre(35, setComedyList); // Comedy
-    fetchMoviesByGenre(10402, setMusicList); // Music
+    fetchMoviesByGenre(53, setShowList);
+    fetchMoviesByGenre(28, setActionList);
+    fetchMoviesByGenre(27, setHorrorList);
+    fetchMoviesByGenre(10749, setRomanceList);
+    fetchMoviesByGenre(18, setDramaList);
+    fetchMoviesByGenre(35, setComedyList);
+    fetchMoviesByGenre(878, setSciencefList);
   }, []);
 
   const settings = {
@@ -54,11 +87,13 @@ function GenresPage() {
     speed: 1000,
     autoplay: true,
     cssEase: "linear",
+    nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrow />,
   };
 
   return (
     <div className="">
-      <div className="h-[52em]">
+      <div className="h-full mt-[-1.4em]">
         {/* Movie Show */}
         <Slider {...settings}>
           {showList.map((movie, index) => (
@@ -77,11 +112,11 @@ function GenresPage() {
       {/* List film */}
       <FilmList filmList={actionList} listName={"ACTION"} />
       <FilmList filmList={horrorList} listName={"HORROR"} />
-      <FilmList filmList={familyList} listName={"FAMILY"} />
-      <FilmList filmList={romanceList} listName={"ROMANCE"} />
+      <FilmList filmList={dramaList} listName={"drama"} />
+      <FilmList filmList={sciencefList} listName={"Science Fiction"} />
       <ContentSearch />
       <FilmList filmList={comedyList} listName={"COMEDY"} />
-      <FilmList filmList={musicList} listName={"MUSIC"} />
+      <FilmList filmList={romanceList} listName={"ROMANCE"} />
     </div>
   );
 }

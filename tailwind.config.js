@@ -9,7 +9,7 @@ module.exports = {
         main: "#c15c19",
         detail: "#141e27",
         opacity: "rgba(0, 0, 0, 0.5)",
-        tx: '#eee'
+        tx: "#eee",
       },
       spacing: {
         847: "847px",

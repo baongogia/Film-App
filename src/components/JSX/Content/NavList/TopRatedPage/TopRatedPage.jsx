@@ -4,6 +4,39 @@ import Slider from "react-slick";
 import ContentSearch from "../../HomePage/ContentSearch";
 import FilmList from "../../FilmDetails/FilmList";
 import { Auth } from "../../../../JS/API";
+import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
+
+function SampleNextArrow(props) {
+  const { onClick } = props;
+  return (
+    <div className="">
+      <div
+        className="text-[4em] absolute top-0 right-0 cursor-pointer pl-2 pt-[35vh] pb-[41.5vh]
+        hover:bg-zinc-400 hover:bg-opacity-30 mt-6"
+        onClick={onClick}
+      >
+        <div className="">
+          <ArrowForwardIos fontSize="large" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function SamplePrevArrow(props) {
+  const { onClick } = props;
+  return (
+    <div className="">
+      <div
+        className="text-[4em] absolute text-center cursor-pointer pl-3 pt-[35vh] pb-[41.5vh]
+       hover:bg-zinc-400 hover:bg-opacity-30 z-[1] mt-5"
+        onClick={onClick}
+      >
+        <ArrowBackIos className="" fontSize="large" />
+      </div>
+    </div>
+  );
+}
 
 function TopRatedPage() {
   const [showList, setShowList] = useState([]);
@@ -45,7 +78,6 @@ function TopRatedPage() {
     fetchMoviesByTopRate(8, setShowList7);
   }, []);
 
-
   const settings = {
     dots: true,
     infinite: true,
@@ -55,11 +87,13 @@ function TopRatedPage() {
     speed: 1000,
     autoplay: true,
     cssEase: "linear",
+    nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrow />,
   };
 
   return (
     <div className="">
-      <div className="h-[52em]">
+      <div className="h-full mt-[-1.1em]">
         {/* Movie Show */}
         <Slider {...settings}>
           {showList.map((movie, index) => (
@@ -76,13 +110,13 @@ function TopRatedPage() {
         </Slider>
       </div>
 
-      <FilmList filmList={showList2} listName={""} />
-      <FilmList filmList={showList3} listName={""} />
+      <FilmList filmList={showList2} listName={"update"} />
+      <FilmList filmList={showList3} listName={"the best"} />
       <ContentSearch />
-      <FilmList filmList={showList4} listName={""} />
-      <FilmList filmList={showList5} listName={""} />
-      <FilmList filmList={showList6} listName={""} />
-      <FilmList filmList={showList7} listName={""} />
+      <FilmList filmList={showList4} listName={"highest revenue"} />
+      <FilmList filmList={showList5} listName={"trending"} />
+      <FilmList filmList={showList6} listName={"chill"} />
+      <FilmList filmList={showList7} listName={"Can't miss"} />
     </div>
   );
 }
